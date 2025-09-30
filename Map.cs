@@ -8,6 +8,7 @@ namespace Console_Project
 {
 	internal class Map
 	{
+		//인스턴스 생성 없이 바로 Map.DrawMap으로 맵을 만들 수 있도록 static 선언
 		static public void DrawMap()
 		{
 			Console.Clear();

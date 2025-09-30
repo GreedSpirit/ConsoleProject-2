@@ -8,8 +8,14 @@ namespace Console_Project
 {
 	internal class MainMenu
 	{
-		int menuCount = 5;
-		public void DrawMenu()
+		//인스턴스 생성 없이 MainMenu.GameStart()로 바로 게임이 시작되도록 하기 위해서 static 선언, 이후 한 번의 게임이 끝나고 또 호출해야 함
+		static int menuCount = 5;
+		static public void GameStart()
+		{
+			DrawMenu();
+			DifficultyInput();
+		}
+		static void DrawMenu()
 		{
 			for (int i = 0; i < menuCount; i++) {
 				Console.SetCursorPosition(GameManager.instance.worldX / 2, GameManager.instance.worldY / 4 + i);
@@ -37,7 +43,7 @@ namespace Console_Project
 			}
 		}
 
-		public void DifficultyInput()
+		static void DifficultyInput()
 		{
 			Console.SetCursorPosition(GameManager.instance.worldX / 2, GameManager.instance.worldY / 4 + menuCount);
 			Console.Write("원하는 난이도 혹은 종료 숫자를 입력해주세요 : ");

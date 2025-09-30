@@ -10,9 +10,7 @@ namespace Console_Project
 	{
 		static void Main(string[] args)
 		{
-			MainMenu mainMenu = new MainMenu();
-			mainMenu.DrawMenu();
-			mainMenu.DifficultyInput();
+			MainMenu.GameStart();
 			Map.DrawMap();
 		}
 	}
