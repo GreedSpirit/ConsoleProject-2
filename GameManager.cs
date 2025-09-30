@@ -9,7 +9,7 @@ namespace Console_Project
 	public class GameManager
 	{
 		public int worldX = 42;
-		public int worldY = 23;
+		public int worldY = 25;
 		public float timer = 30;
 		public int difficulty;
 

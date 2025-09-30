@@ -13,6 +13,7 @@ namespace Console_Project
 			MainMenu mainMenu = new MainMenu();
 			mainMenu.DrawMenu();
 			mainMenu.DifficultyInput();
+			Map.DrawMap();
 		}
 	}
 }
