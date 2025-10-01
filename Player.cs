@@ -44,6 +44,11 @@ namespace Console_Project
 			if (Program.mKey.Key == ConsoleKey.S && _y < GameManager.instance.worldY) _y++; // 아래 이동
 			if (Program.mKey.Key == ConsoleKey.A && _x > 2) _x -= 2; // 왼쪽 이동
 			if (Program.mKey.Key == ConsoleKey.D && _x < GameManager.instance.worldX - 4) _x += 2; // 오른쪽 이동
+			if (Program.mKey.Key == ConsoleKey.B && GameManager.instance.playerBomb > 0)
+			{
+				GameManager.instance.playerBomb--;
+				Bomb();
+			}
 		}
 
 		public void Crash()
@@ -166,5 +171,14 @@ namespace Console_Project
 			}
 		}
 
+		public void Bomb()
+		{
+			for (int i = 0; i < Program.projectiles.Count; i++) 
+			{
+				Program.projectiles [i].IsLive = false;
+			}
+			Console.Clear();
+			GameManager.instance.gameStartRoutine?.Invoke();
+		}
 	}
 }
