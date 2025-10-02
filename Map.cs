@@ -4,10 +4,11 @@ namespace Console_Project
 {
 	class Map
 	{
-		//인스턴스 생성 없이 바로 Map.DrawMap으로 맵을 만들 수 있도록 static 선언
+		//인스턴스 생성 없이 바로 Map.DrawMap으로 만들 수 있도록 static 선언
 		static public void DrawMap()
 		{
-			for(int i = 0; i < GameManager.instance.worldX / 2; i++)
+			Console.SetCursorPosition(0, 0);
+			for (int i = 0; i < GameManager.instance.worldX / 2; i++)
 			{
 				Console.Write("▩");
 			}
@@ -25,11 +26,20 @@ namespace Console_Project
 			{
 				Console.Write("▩");
 			}
-			Console.WriteLine();
+			DrawState();
 			
+		}
+
+		static public void DrawState()
+		{
+			Console.SetCursorPosition(6, GameManager.instance.worldY + 2);
 			Console.WriteLine("Score : " + GameManager.instance.score + "      Bomb(B) : " + GameManager.instance.playerBomb
 				+ "      Health : " + GameManager.instance.playerHealth);
-			Console.WriteLine("Time : " + GameManager.stopWatch.ElapsedMilliseconds / 1000 + "." + GameManager.stopWatch.ElapsedMilliseconds % 1000); ;
+			if (GameManager.instance.difficulty == 3)
+			{
+				Console.SetCursorPosition(6, GameManager.instance.worldY + 3);
+				Console.WriteLine("Time : " + (GameManager.instance.maxTimer - 1 - GameManager.stopWatch.ElapsedMilliseconds / 1000) + "." + (1000 - GameManager.stopWatch.ElapsedMilliseconds % 1000));
+			}
 		}
 	}
 }
