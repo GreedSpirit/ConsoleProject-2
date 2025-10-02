@@ -8,7 +8,9 @@ namespace Console_Project
 	{
 		static Player player = new Player();
 		public static ConsoleKeyInfo mKey = new ConsoleKeyInfo();
-		public static List<Projectile> projectiles = new List<Projectile>();
+		//public static List<Projectile> projectiles = new List<Projectile>();
+		public static CustomList<Projectile> projectiles = new CustomList<Projectile>();
+		static bool checkKey;
 
 
 		static void Main(string[] args)
@@ -22,52 +24,72 @@ namespace Console_Project
 			MainMenu.MenuStart();
 
 			Console.Clear(); // 메인 메뉴 화면 지우기
+			
+			GameManager.stopWatch.Start();
+			
+			GameManager.instance.gameStartRoutine?.Invoke();
+			Map.DrawMap();
+			player.DrawPlayer();
 
 			switch (GameManager.instance.difficulty)
 			{
 				case 1: //easy 난이도
-				case 2: //normal 난이도
-					GameManager.stopWatch.Start();
-					GameManager.instance.gameStartRoutine?.Invoke(); // 맵과 플레이어 그리기 
-
-					while (GameManager.instance.GameOver() && GameManager.instance.GameClear()) // z입력받으면 강제 종료
+				case 2: //normal 난이도			 
+					while (GameManager.instance.GameOver() && GameManager.instance.GameClear())
 					{
 						mKey = Console.ReadKey(true);
-
+						player.Record();
 						player.Crash();
 
-						GameManager.instance.gameStartRoutine?.Invoke();
+						player.ErasePlayer();
 						GameManager.instance.projectileRoutine?.Invoke();
+						GameManager.instance.gameStartRoutine?.Invoke();
+						Projectile.DrawProjectile();
+						player.DrawPlayer();
 					}
 					if(!GameManager.instance.GameClear()) GameManager.instance.DrawGameClear();
 					if (!GameManager.instance.GameOver()) GameManager.instance.DrawGameOver();
 						break;
 
 				case 3: //hard 난이도
-					GameManager.stopWatch.Start();
-					GameManager.instance.gameStartRoutine?.Invoke(); // 맵과 플레이어 그리기 
 
-					while (GameManager.instance.GameOver() && GameManager.instance.GameClear())
+					while (GameManager.instance.GameOver() && GameManager.instance.HardGameClear())
 					{
+						if (Console.KeyAvailable)
+						{
+							mKey = Console.ReadKey(true);
+							checkKey = true;
+						}
+						
 						if (GameManager.stopWatch.ElapsedMilliseconds % 150 == 0)
 						{
+							player.Record();
 
-							if (Console.KeyAvailable)
-							{
-								mKey = Console.ReadKey(true);
-
+							if (checkKey)
+							{								
 								player.HandleInput();
+								checkKey = false;
 							}
-							player.Crash();
-							GameManager.instance.ClearScreenByFilling();
-							Map.DrawMap();
-							player.DrawPlayer();
+							
+							player.NewCrash();
+							
+							if(GameManager.stopWatch.ElapsedMilliseconds > GameManager.instance.maxTimer / 2 * 1000)
+							{
+								Projectile.CreateProjectile();
+							}
 							GameManager.instance.projectileRoutine?.Invoke();
+							Map.DrawState();
+							player.ErasePlayer();
+							Projectile.DrawProjectile();
+							player.DrawPlayer();
 						}
 					}
+					if (!GameManager.instance.HardGameClear()) GameManager.instance.DrawGameClear();
+					if (!GameManager.instance.GameOver()) GameManager.instance.DrawGameOver();
 
 					break;
 				default: //종료
+					Console.Clear();
 					Console.WriteLine("요청에 의해서 게임을 종료합니다.");
 					break;
 			}
@@ -78,18 +100,15 @@ namespace Console_Project
 
 		static void SetGameStartRountine()
 		{
-			GameManager.instance.gameStartRoutine += GameManager.instance.ClearScreenByFilling;
-			GameManager.instance.gameStartRoutine += Map.DrawMap;
-
+			GameManager.instance.gameStartRoutine += Map.DrawState;
 			GameManager.instance.gameStartRoutine += player.HandleInput;
-			GameManager.instance.gameStartRoutine += player.DrawPlayer;
+			//GameManager.instance.gameStartRoutine += player.DrawPlayer;
 		}
 
 		static void SetProjectileRoutine()
 		{
 			GameManager.instance.projectileRoutine += Projectile.CreateProjectile;
 			GameManager.instance.projectileRoutine += Projectile.MoveProjectile;
-			GameManager.instance.projectileRoutine += Projectile.DrawProjectile;
 		}
 
 		
