@@ -21,12 +21,6 @@ namespace Console_Project
 		static public Stopwatch stopWatch = new Stopwatch();
 
 		static public GameManager instance = new GameManager();
-
-		public void ClearScreenByFilling()
-		{
-			Console.SetCursorPosition(0, 0);
-		}
-
 		public bool GameOver()
 		{
 			return playerHealth > 0;
@@ -37,9 +31,9 @@ namespace Console_Project
 			return stopWatch.ElapsedMilliseconds < maxTimer * 1000;
 		}
 
-		public bool GameClear() // 100개의 투사체가 사라지면 이기는 조건 (bomb는 제외)
+		public bool GameClear() // 100개의 투사체가 사라지면 이기는 조건 (bomb는 제외), 시연 및 테스트는 10
 		{
-			return score <= 10;
+			return score < 10;
 		}
 		public void DrawGameClear()
 		{
@@ -47,6 +41,8 @@ namespace Console_Project
 			Console.SetWindowSize(100, 30);
 			Console.WriteLine("   ####     ##     #    #   ######  \r\n  ##  ##   #  #    ##  ##   #       \r\n ##       #    #   # ## #   #       \r\n ##  ###  ######   # ## #   ####    \r\n ##   ##  #    #   #    #   #       \r\n  ## ###  #    #   #    #   #       \r\n   ### #  #    #   #    #   ######  \r\n                                    \r\n");  
 			Console.WriteLine("   ####   #        ######     ##     #####      ##    \r\n  ##  ##  #        #         #  #    #    #     ##    \r\n ##       #        #        #    #   #    #     ##    \r\n ##       #        ####     ######   #####      ##    \r\n ##       #        #        #    #   #  #             \r\n  ##  ##  #        #        #    #   #   #      ##    \r\n   ####   ######   ######   #    #   #    #     ##    \r\n                                                      \r\n");
+			Console.Write("클리어를 축하드립니다!! 종료하려면 엔터를 한 번 눌러주세요!");
+			Console.ReadLine();
 		}
 
 		public void DrawGameOver()
@@ -55,6 +51,8 @@ namespace Console_Project
 			Console.SetWindowSize(100, 30);
 			Console.WriteLine("   ####     ##     #    #   ######  \r\n  ##  ##   #  #    ##  ##   #       \r\n ##       #    #   # ## #   #       \r\n ##  ###  ######   # ## #   ####    \r\n ##   ##  #    #   #    #   #       \r\n  ## ###  #    #   #    #   #       \r\n   ### #  #    #   #    #   ######  \r\n                                    \r\n");
 			Console.WriteLine("   ###    #    #   ######   #####                              \r\n  ## ##   #    #   #        #    #                             \r\n ##   ##  #    #   #        #    #                             \r\n ##   ##   #  #    ####     #####                              \r\n ##   ##   #  #    #        #  #                               \r\n  ## ##     ##     #        #   #      ##       ##       ##    \r\n   ###      ##     ######   #    #     ##       ##       ##    \r\n                                                               \r\n");
+			Console.Write("아쉽지만 실패하셨습니다... 다음데 또 도전해주세요! 종료를 위해서 엔터를 한 번 눌러주세요!!");
+			Console.ReadLine();
 		}
 
 

@@ -166,7 +166,7 @@ namespace Console_Project
 
 		static public void CreateProjectile()
 		{
-			if(Program.projectiles.Count != 0) // 오브젝트 풀링?
+			if(Program.projectiles.Count != 0)
 			{
 				for(int i = 0; i < Program.projectiles.Count; i++)
 				{
@@ -198,6 +198,10 @@ namespace Console_Project
 			else if (GameManager.instance.difficulty == 2)
 			{
 				Program.projectiles[Program.projectiles.Count - 1].NormalCreateProjectile();
+			}
+			else if (GameManager.instance.difficulty == 3)
+			{
+				Program.projectiles[Program.projectiles.Count - 1].HardCreateProjectile();
 			}
 
 		}
