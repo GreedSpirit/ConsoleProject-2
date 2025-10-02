@@ -9,7 +9,7 @@ namespace Console_Project
 			Title, Easy, Normal, Hard
 		}
 		//인스턴스 생성 없이 MainMenu.GameStart()로 바로 게임이 시작되도록 하기 위해서 static 선언, 이후 한 번의 게임이 끝나고 또 호출해야 함
-		static int menuCount = 5;
+		static int menuCount = 4;
 		static public void MenuStart()
 		{
 			DrawMenu();
@@ -17,24 +17,25 @@ namespace Console_Project
 		}
 		static void DrawMenu()
 		{
+			Console.SetWindowSize(100, 50);
 			for (int i = 0; i < menuCount; i++) {
 				switch ((difficulty)i)
 				{
 					case difficulty.Title:
-						Console.WriteLine("메인 메뉴");
+						Console.WriteLine("'##::::'##:'########:'##::: ##:'##::::'##:\r\n ###::'###: ##.....:: ###:: ##: ##:::: ##:\r\n ####'####: ##::::::: ####: ##: ##:::: ##:\r\n ## ### ##: ######::: ## ## ##: ##:::: ##:\r\n ##. #: ##: ##...:::: ##. ####: ##:::: ##:\r\n ##:.:: ##: ##::::::: ##:. ###: ##:::: ##:\r\n ##:::: ##: ########: ##::. ##:. #######::\r\n..:::::..::........::..::::..:::.......:::\r\n");
 						break;
 					case difficulty.Easy:
-						Console.WriteLine("1. Easy");
+						Console.WriteLine(":::'##::::::::'########::::'###:::::'######::'##:::'##:\r\n:'####:::::::: ##.....::::'## ##:::'##... ##:. ##:'##::\r\n:.. ##:::::::: ##::::::::'##:. ##:: ##:::..:::. ####:::\r\n::: ##:::::::: ######:::'##:::. ##:. ######::::. ##::::\r\n::: ##:::::::: ##...:::: #########::..... ##:::: ##::::\r\n::: ##:::'###: ##::::::: ##.... ##:'##::: ##:::: ##::::\r\n:'######: ###: ########: ##:::: ##:. ######::::: ##::::\r\n:......::...::........::..:::::..:::......::::::..:::::\r\n");
 						break;
 					case difficulty.Normal:
-						Console.WriteLine("2. Normal");
+						Console.WriteLine(":'#######:::::::'##::: ##::'#######::'########::'##::::'##::::'###::::'##:::::::\r\n'##.... ##:::::: ###:: ##:'##.... ##: ##.... ##: ###::'###:::'## ##::: ##:::::::\r\n..::::: ##:::::: ####: ##: ##:::: ##: ##:::: ##: ####'####::'##:. ##:: ##:::::::\r\n:'#######::::::: ## ## ##: ##:::: ##: ########:: ## ### ##:'##:::. ##: ##:::::::\r\n'##::::::::::::: ##. ####: ##:::: ##: ##.. ##::: ##. #: ##: #########: ##:::::::\r\n ##::::::::'###: ##:. ###: ##:::: ##: ##::. ##:: ##:.:: ##: ##.... ##: ##:::::::\r\n #########: ###: ##::. ##:. #######:: ##:::. ##: ##:::: ##: ##:::: ##: ########:\r\n.........::...::..::::..:::.......:::..:::::..::..:::::..::..:::::..::........::\r\n");
 						break;
 					case difficulty.Hard:
-						Console.WriteLine("3. Hard");
+						Console.WriteLine(":'#######:::::::'##::::'##::::'###::::'########::'########::\r\n'##.... ##:::::: ##:::: ##:::'## ##::: ##.... ##: ##.... ##:\r\n..::::: ##:::::: ##:::: ##::'##:. ##:: ##:::: ##: ##:::: ##:\r\n:'#######::::::: #########:'##:::. ##: ########:: ##:::: ##:\r\n:...... ##:::::: ##.... ##: #########: ##.. ##::: ##:::: ##:\r\n'##:::: ##:'###: ##:::: ##: ##.... ##: ##::. ##:: ##:::: ##:\r\n. #######:: ###: ##:::: ##: ##:::: ##: ##:::. ##: ########::\r\n:.......:::...::..:::::..::..:::::..::..:::::..::........:::\r\n");
 						break;
 
 					default:
-						Console.WriteLine($"{i}. 종료");
+						
 						break;
 				}
 			}
@@ -43,14 +44,14 @@ namespace Console_Project
 		static void DifficultyInput()
 		{
 			
-			Console.Write("원하는 난이도 혹은 종료 숫자를 입력해주세요 : ");
+			Console.Write("원하는 난이도를 입력해주세요 : ");
 			int.TryParse(Console.ReadLine(), out GameManager.instance.difficulty);
-			while (!(GameManager.instance.difficulty > 0 && GameManager.instance.difficulty < menuCount))
+			while (!(GameManager.instance.difficulty > 0 && GameManager.instance.difficulty <= menuCount))
 			{
-				Console.SetCursorPosition(0, menuCount);
+				Console.SetCursorPosition(0, Console.CursorTop - 1);
 				Console.Write(new string(' ', Console.WindowWidth));
-				Console.SetCursorPosition(0, menuCount);
-				Console.Write($"1 ~ {menuCount - 1} 사이의 숫자만 입력해주세요 : ");
+				Console.SetCursorPosition(0, Console.CursorTop);
+				Console.Write($"1 ~ {menuCount} 사이의 숫자만 입력해주세요 : ");
 				int.TryParse(Console.ReadLine(), out GameManager.instance.difficulty);
 			}
 		}
